@@ -4,7 +4,7 @@ close all
 clc
 sample=100;%the step size to ignore messages received in between 
 %[e.g. sample=1 means all messages are read]
-bag = rosbag('models_states_5mps1hz_basic.bag')
+bag = rosbag('models_states_hlafmps_100hz_basic.bag')
 bag.AvailableTopics
 %bag.MessageList
 bagselect = select(bag, 'Topic', '/gazebo/model_states');
@@ -27,7 +27,7 @@ xlabel('time (s)')
 ylabel('V_x (m/s)')
 grid on
 hold on
-plot(bagselect.MessageList.Time(1:sample:bagselect.NumMessages),0.*v_d_x(:,1,1)+5)
+plot(bagselect.MessageList.Time(1:sample:bagselect.NumMessages),0.*v_d_x(:,1,1)+0.5)
 legend('real','command')
 subplot(3,1,2)
 v_d_y=cellfun(@(m) double(m.Twist(arg_cf1, 1).Linear.Y),msgs);

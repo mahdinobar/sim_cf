@@ -39,35 +39,35 @@ if __name__ == '__main__':
     time.sleep(5.0)
 
     global freq_pub
-    freq_pub = 1
+    freq_pub = 100
     rate = rospy.Rate(freq_pub)
     #velocity command
-    pubSetpointVel = rospy.Publisher("/cf1" +"/cmd_vel", Twist , queue_size=10)
-    #rospy.Subscriber("/cf1" + "/local_position" , GenericLogData , local_position_callback)
-    #pubSetpointPos = rospy.Publisher("/cf1" +"/cmd_position", Position , queue_size=10)
-    #next_pos = Position()
-    #current_position = Position()
+    #pubSetpointVel = rospy.Publisher("/cf1" +"/cmd_vel", Twist , queue_size=10)
+    rospy.Subscriber("/cf1" + "/local_position" , GenericLogData , local_position_callback)
+    pubSetpointPos = rospy.Publisher("/cf1" +"/cmd_position", Position , queue_size=10)
+    next_pos = Position()
+    current_position = Position()
 
 
 
-    vel_msg = Twist()
-    vel_msg.linear.x=1.
-    vel_msg.linear.y=0.
-    vel_msg.linear.z=0.
-    vel_msg.angular.x = 0.
-    vel_msg.angular.y = 0.
-    vel_msg.angular.z = 0.
+    #vel_msg = Twist()
+    #vel_msg.linear.x=1.
+    #vel_msg.linear.y=0.
+    #vel_msg.linear.z=0.
+    #vel_msg.angular.x = 0.
+    #vel_msg.angular.y = 0.
+    #vel_msg.angular.z = 0.
     
 
     a=0
     while a<1e5:
-        #next_pos.x = 5./freq_pub + current_position.x
-        #next_pos.y = 0./freq_pub + current_position.y
-        #next_pos.z = 0./freq_pub + current_position.z
-        #next_pos.header.seq += 1
-        #next_pos.header.stamp = rospy.Time.now()
-        pubSetpointVel.publish(vel_msg)
-        #pubSetpointPos.publish(next_pos)
+        next_pos.x = 0.5/freq_pub + current_position.x
+        next_pos.y = 0./freq_pub + current_position.y
+        next_pos.z = 0./freq_pub + current_position.z
+        next_pos.header.seq += 1
+        next_pos.header.stamp = rospy.Time.now()
+        #pubSetpointVel.publish(vel_msg)
+        pubSetpointPos.publish(next_pos)
         a+=1
         # print('a',a)
         # print('current_position=',current_position)
